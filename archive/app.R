@@ -56,12 +56,12 @@ ui <-
     # windowTitle = "VCSEP Dashboard",
     title = div(
       img(
-        src = "brc-vec.png",
+        src = "assets/brc-vec.png",
         style = "margin-top:-20px;padding-right:0;padding-bottom:10px;padding-top:10px;",
         height = 60
       ),
       img(
-        src = "covid-19-vulnerability-logo.png",
+        src = "assets/covid-19-vulnerability-logo.png",
         style = "position:absolute;top:0;right:0;padding-bottom:15px;padding-top:10px;padding-right:15px",
         height = 60
       )
@@ -103,7 +103,7 @@ ui <-
           id = "click-area", class = "panel panel-default",
           top = 250, left = "auto", bottom = "auto", right = 425, width = 300, fixed = TRUE,
           draggable = FALSE, height = "auto",
-          img(src = "click-area.png", width = 300)
+          img(src = "assets/click-area.png", width = 300)
         ),
 
         absolutePanel(
@@ -159,17 +159,17 @@ ui <-
       fluidRow(
         id = "data-infographic-row",
         img(
-          src = "data-info-download.png",
+          src = "assets/data-info-download.png",
           height = 90,
           style = "margin-left:30px;margin-bottom:-8px;"
         ),
         img(
-          src = "data-info-hide-cols.png",
+          src = "assets/data-info-hide-cols.png",
           height = 90,
           style = "margin-left:20px;margin-bottom:-15px;"
         ),
         img(
-          src = "data-info-find.png",
+          src = "assets/data-info-find.png",
           height = 90,
           style = "position:absolute;top:180px;right:0;margin-right:50px;"
         )

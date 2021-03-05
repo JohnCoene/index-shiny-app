@@ -1,0 +1,5 @@
+^data-raw$
+^CHANGELOG\.md$
+^archive$
+^index-shiny-app\.Rproj$
+^rsconnect$

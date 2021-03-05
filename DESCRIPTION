@@ -1,0 +1,37 @@
+Package: resilience.index
+Title: Interactive 'Shiny' App
+Date: 2021-01-25
+Version: 1.0.0.9000
+Authors@R: c(
+    person("Mike", "Page", email = "email@gmail.com", role = c("aut", "cre")),
+    person("John", "Coene", email = "jcoenep@gmail.com", role = c("ctb"))
+  )
+Description: Interactive disasters and emergencies application. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 3.5.0)
+Imports:
+  shiny,
+  tidyr,
+  stringr,
+  readr,
+  magrittr,
+  arrow,
+  sf,
+  leaflet,
+  scales,
+  shinydashboard,
+  shinydashboardPlus,
+  shinyWidgets,
+  htmltools,
+  DT,
+  sever,
+  waiter,
+  dashboardthemes,
+  shinyjs,
+  cicerone,
+  dplyr
+RoxygenNote: 7.1.1
+URL: https://github.com/britishredcrosssociety/index-shiny-app
+BugReports: https://github.com/britishredcrosssociety/index-shiny-app/issues/
