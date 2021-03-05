@@ -19,7 +19,6 @@
 #' @import waiter
 #' @import dashboardthemes
 #' @import shinyjs
-#' @import cicerone
 #' 
 #' @export
 run_app <- function() {

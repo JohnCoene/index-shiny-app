@@ -1,43 +1,5 @@
+#' @importFrom cicerone use_cicerone
 ui <- function(req){
-
-  # ---- JS and CSS to fully collapse sidebar ----
-  # Modified from: https://stackoverflow.com/a/53517933
-  # '#sidebarCollapsed' data-collapsed="true"
-  sidebar_js <- HTML("
-  $(document).on('shiny:connected', function(event) {
-    $('.sidebar-toggle').on('click', function() {
-      /*
-      if ($('body')[0].className != 'skin-blue sidebar-mini sidebar-collapse') {
-        $('#sidebarCollapsed').css('display', 'none')
-      } else {
-        $('#sidebarCollapsed').css('display', 'block')
-      }
-      */
-      
-      if ($('body')[0].className === 'skin-blue sidebar-mini sidebar-open') {
-        $('#sidebarCollapsed').css('display', 'block')
-      } else if ($('body')[0].className != 'skin-blue sidebar-mini sidebar-collapse') {
-        $('#sidebarCollapsed').css('display', 'none')
-      } else {
-        $('#sidebarCollapsed').css('display', 'block')
-      }
-    })
-  });
-  ")
-
-  sidebar_css <- HTML("
-  .sidebar-mini.sidebar-collapse .content-wrapper {
-        margin-left: 0px !important;
-  }
-
-  /* Hide as much of the title as we can */
-  .sidebar-mini.sidebar-collapse .main-header .logo {
-      width: 0px;
-  }
-  .sidebar-mini.sidebar-collapse .main-header .navbar {
-      margin-left: 0px;
-  }
-  ")
 
   body_colwise <- dashboardBody(
     tags$head(
@@ -48,18 +10,21 @@ ui <- function(req){
       ),
       tags$script(
         src = "assets/section.js"
+      ),
+      tags$script(
+        src = "assets/sidebar.js"
       )
     ),
-    tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
-    tags$style(type = "text/css", "#map {height: calc(100vh - 200px) !important;}"),
-    # import custom JavaScript for Waiter
-    # tags$head(HTML("<title>British Red Cross Vulnerability Index and Resilience Index</title>")),
-
     # - Error and waiting functions to improve UX -
     use_sever(),
     use_waiter(),
     use_cicerone(),
     useShinyjs(),
+    tags$style(
+      type = "text/css", 
+      "#map {height: calc(100vh - 200px) !important;}"
+    ),
+    # import custom JavaScript for Waiter
     # Load custom theme
     shinyDashboardThemes(
       theme = "grey_light"
@@ -74,8 +39,6 @@ ui <- function(req){
           id = "map-tab",
           icon = icon(name = "globe"),
           leafletOutput("map", height = "100%"),
-          # , height = "890px"),
-
           absolutePanel(
             id = "legend",
             class = "panel panel-default",
@@ -86,7 +49,10 @@ ui <- function(req){
             fixed = FALSE,
             draggable = FALSE,
             height = "auto",
-            img(src = "assets/bivar-legend.png", width = 300)
+            img(
+              src = "assets/bivar-legend.png", 
+              width = 300
+            )
           )
         ),
         tabPanel(
@@ -103,10 +69,20 @@ ui <- function(req){
                 " vulnerability and a ",
                 tags$b("lower"),
                 " capacity. To learn more about the British Red Cross Vulnerability Index and how these scores are calculated,",
-                tags$a(href = "https://github.com/britishredcrosssociety/covid-19-vulnerability/", target = "_blank", "click here.")
+                tags$a(
+                  href = "https://github.com/britishredcrosssociety/covid-19-vulnerability/", 
+                  target = "_blank", 
+                  "click here."
+                )
               ),
-              downloadButton("downloadVI2", "Download Vulnerability Index data"),
-              downloadButton("downloadRI2", "Download Resilience Index data"),
+              downloadButton(
+                "downloadVI2", 
+                "Download Vulnerability Index data"
+              ),
+              downloadButton(
+                "downloadRI2", 
+                "Download Resilience Index data"
+              ),
               hr()
             ),
             fluidRow(
@@ -227,8 +203,6 @@ ui <- function(req){
     # - Main, left-hand sidebar -
     sidebar = dashboardSidebar(
       width = "300px",
-      tags$head(tags$script(sidebar_js)),
-      tags$head(tags$style(sidebar_css)),
       br(),
       h4("1. Select theme", id = "h_resilience", style = "padding-left:10px; padding-right:10px;"),
       sidebarMenu(

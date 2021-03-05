@@ -10,3 +10,13 @@
 pkg_data <- function(...){
   system.file("datasets", ..., package = "resilience.index")
 }
+
+#' Disconnected Screen
+#' 
+#' @keywords internal
+disconnected <- sever_default(
+  title = "Disconnected", 
+  subtitle = "Your session ended", 
+  button = "Reconnect", 
+  button_class = "info"
+)

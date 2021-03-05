@@ -22,8 +22,8 @@ server <- function(input, output, session) {
     ) %>%
     lapply(htmltools::HTML)
 
-  # initialise then start the guide
-  guide$init()$start()
+  # start guide
+  guide()
 
   # ---- Functions and variables for the server ----
   vi_pal <- colorFactor("viridis", c(1:10), reverse = TRUE)
@@ -34,17 +34,27 @@ server <- function(input, output, session) {
   cols_to_format <- reactiveVal() # list of data table columns to format in `renderDT()`
 
   # Set up a waiter for the map
-  map_waiter <- Waiter$new(id = "waiter-content")
+  map_waiter <- Waiter$new(
+    id = "waiter-content",
+    color = "white"
+  )
 
   # ---- Draw basemap ----
   # set up the static parts of the map (that don't change as user selects different options)
   output$map <- renderLeaflet({
     leaflet(
       .globals$ri_shp,
-      options = leafletOptions(minZoom = 5, maxZoom = 15, attributionControl = F)
+      options = leafletOptions(
+        minZoom = 5, 
+        maxZoom = 15, 
+        attributionControl = FALSE
+      )
     ) %>%
-
-      setView(lat = 54.00366, lng = -2.547855, zoom = 7) %>% # centre map on Whitendale Hanging Stones, the centre of GB: https://en.wikipedia.org/wiki/Centre_points_of_the_United_Kingdom
+      setView(
+        lat = 54.00366, 
+        lng = -2.547855, 
+        zoom = 7
+      ) %>% # centre map on Whitendale Hanging Stones, the centre of GB: https://en.wikipedia.org/wiki/Centre_points_of_the_United_Kingdom
       addProviderTiles(providers$CartoDB.Positron) %>%
 
       # Show filtered Local Authorities
@@ -72,8 +82,6 @@ server <- function(input, output, session) {
           direction = "auto"
         )
       ) %>%
-
-      # Add button to reset zoom
       addEasyButton(easyButton(
         icon = "fa-globe",
         title = "Reset zoom level",
@@ -189,6 +197,9 @@ server <- function(input, output, session) {
     # print(input$map_shape_click$id)
 
     map_waiter$show()
+    on.exit({
+      map_waiter$hide()
+    })
 
     # Get selected set of LAs
     curr_LAs <- filteredLAs()
@@ -299,8 +310,6 @@ server <- function(input, output, session) {
           lat2 = as.numeric(curr_bbox["ymax"])
         )
     }
-
-    map_waiter$hide()
 
     map
   })
@@ -764,8 +773,9 @@ server <- function(input, output, session) {
   })
 
   # - Error messages -
-  sever()
-
-  # - Waiter -
-  waiter_hide()
+  sever(
+    html = disconnected,
+    bg_color = "white",
+    color = "black" 
+  )
 }
